@@ -1,0 +1,169 @@
+/* styles/theme.css */
+:root {
+  --primary:       #001B94;
+  --primary-hover: #0026D6;
+  --bg:            #FFFFFF;
+  --bg-light:      #F5F6F8;
+  --text:          #333333;
+  --text-sec:      #6B7280;
+  --border:        #E5E7EB;
+  --orange:        #FF7A00;
+  --green:         #22C55E;
+  --red:           #EF4444;
+  --yellow:        #FACC15;
+}
+
+/* ── Global reset ── */
+html, body, [class*='css'] {
+  font-family: Inter, Helvetica, Arial, sans-serif !important;
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* ── Hide default Streamlit menu & footer ── */
+#MainMenu, footer { visibility: hidden; }
+
+/* ── Top navbar ── */
+.navbar {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: var(--primary); height: 64px;
+  display: flex; align-items: center;
+  padding: 0 28px; z-index: 9999;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+}
+.navbar-logos { display: flex; align-items: center; gap: 24px; }
+.navbar-title {
+  color: #ffffff; font-size: 18px;
+  font-weight: 700; letter-spacing: 0.5px;
+}
+.navbar-nav { margin-left: auto; display: flex; gap: 24px; }
+.nav-link {
+  color: rgba(255,255,255,0.85); font-size: 14px;
+  font-weight: 500; cursor: pointer;
+  text-decoration: none; transition:color .16s ease;
+}
+.nav-link:hover, .nav-link.active { color: #ffffff; }
+.nav-link.locked { color: rgba(255,255,255,0.35); cursor: not-allowed; }
+
+/* ── Content offset under fixed navbar ── */
+.main-content{
+  margin-top:20px;
+  padding:12px 32px 40px;
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* ── Hide Streamlit default header/banner and remove top padding ── */
+header, div[role='banner'], [data-testid='stHeader'] { display: none !important; }
+/* block-container selectors (cover multiple Streamlit versions) */
+.reportview-container .main .block-container,
+.main .block-container,
+.css-18e3th9,
+.css-1v3fvcr {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* ensure app container hugs top */
+.stApp { padding-top: 0 !important; }
+
+/* ── Card ── */
+.card {
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  padding: 28px 32px; margin-bottom: 24px;
+  animation:fadeIn .36s ease both;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── Primary Button ── */
+.btn-primary {
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 6px;
+  padding: 12px 28px; font-size: 15px;
+  font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+
+/* ── Section heading pill ── */
+.section-pill {
+  display: inline-block; background: var(--primary);
+  color: #fff; border-radius: 4px;
+  padding: 4px 14px; font-size: 13px;
+  font-weight: 600; margin-bottom: 12px;
+}
+
+/* ── KPI feature cards ── */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:20px;
+  margin-bottom:18px;
+}
+.kpi-card{
+  background:#ffffff;
+  border-radius:12px;
+  padding:16px 18px;
+  border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(0,0,0,0.05);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.kpi-card:hover{ transform:translateY(-4px); box-shadow:0 12px 25px rgba(0,0,0,0.08); }
+.kpi-title{ font-size:15px; font-weight:600; color:var(--primary); margin-bottom:6px; }
+.kpi-desc{ font-size:13px; color:var(--text-sec); line-height:1.3 }
+
+/* ── Upload drop-box style ── */
+.upload-box{
+  border:2px dashed var(--border);
+  border-radius:12px;
+  padding:28px;
+  text-align:center;
+  background:#fafafa;
+  transition:all .18s ease;
+}
+.upload-box:hover{ border-color:var(--primary); background:#f7f9ff; }
+
+/* ── Metric tile ── */
+.metric-tile {
+  background: var(--bg-light); border-radius: 10px;
+  padding: 20px 24px; text-align: center;
+  border: 1px solid var(--border);
+}
+.metric-value { font-size: 28px; font-weight: 700; color: var(--primary); }
+.metric-label { font-size: 13px; color: var(--text-sec); margin-top: 4px; }
+
+/* ── Step progress bar buttons — override Streamlit native button colors ── */
+
+/* Active step: navy blue */
+div[data-testid="stHorizontalBlock"] button[kind="primary"],
+div[data-testid="stColumns"] button[kind="primary"] {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+div[data-testid="stHorizontalBlock"] button[kind="primary"]:hover,
+div[data-testid="stColumns"] button[kind="primary"]:hover {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+/* Secondary (done/inactive) steps: dark surface matching navbar */
+div[data-testid="stHorizontalBlock"] button[kind="secondary"],
+div[data-testid="stColumns"] button[kind="secondary"] {
+  background-color: #1a1a2e !important;
+  border-color: #3a3a5c !important;
+  color: rgba(255,255,255,0.7) !important;
+}
+div[data-testid="stHorizontalBlock"] button[kind="secondary"]:hover,
+div[data-testid="stColumns"] button[kind="secondary"]:hover {
+  background-color: #252545 !important;
+  border-color: var(--primary) !important;
+  color: #ffffff !important;
+}

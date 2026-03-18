@@ -42,16 +42,6 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # Step progress
-    st.markdown("""
-    <div class='step-bar'>
-      <div class='step active'>Upload</div>
-      <div class='step'>EDA</div>
-      <div class='step'>Forecast</div>
-      <div class='step'>Results</div>
-    </div>
-    """, unsafe_allow_html=True)
-
     # Upload card (styled drop-zone background) - uploader control follows
     st.markdown("""
     <div class='card'>

@@ -1,22 +1,23 @@
-import streamlit as st
+﻿import streamlit as st
 import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
+
 st.set_page_config(
     page_title='NTPC Forecasting Dashboard',
-    page_icon='⚡',
+    page_icon='âš¡',
     layout='wide',
     initial_sidebar_state='collapsed'
 )
 
-# ── Load IndiGo theme ──────────────────────────────────
+# â”€â”€ Load IndiGo theme â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with open('styles/theme.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# ── Session state defaults ──────────────────────────
+# â”€â”€ Session state defaults â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 defaults = {
     'page': 'home',
     'df_raw': None,
@@ -36,14 +37,14 @@ for k, v in defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
-# ── Logo paths ─────────────────────────────────────
+# â”€â”€ Logo paths â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 NTPC_LOGO   = 'assets/ntpc_logo.png'
 AIONOS_LOGO = 'assets/aionos_logo.png'
 
-# ── Navbar ─────────────────────────────────────────
+# â”€â”€ Navbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def render_navbar():
-    pages = ['home', 'eda', 'forecast', 'validation', 'xai', 'chatbot', 'rop']
-    labels = ['🏠 Home', '📊 EDA', '📈 Forecast', '🔍 Validation', '🧠 XAI', '🤖 Assistant', '📦 ROP']
+    pages = ['home', 'eda', 'forecast', 'validation', 'xai', 'chatbot']
+    labels = ['ðŸ  Home', 'ðŸ“Š EDA', 'ðŸ“ˆ Forecast', 'ðŸ”¬ Validation', 'ðŸ§  XAI', 'ðŸ¤– Assistant']
     unlocked = {
         'home':       True,
         'eda':        st.session_state['df_raw'] is not None,
@@ -51,7 +52,6 @@ def render_navbar():
         'validation': st.session_state['forecast_done'],
         'xai':        st.session_state['forecast_done'],
         'chatbot':    st.session_state['forecast_done'],
-        'rop':        True,
     }
     cols = st.columns([1,1,1,1,1,1,1,1,1,1,1])
     # Left: logos + title
@@ -76,7 +76,7 @@ def render_navbar():
                 st.markdown(f'<span class=\'nav-link locked\'>{label}</span>',
                             unsafe_allow_html=True)
 
-# ── Step progress bar ──────────────────────────────────
+# â”€â”€ Step progress bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def render_progress():
     steps = [
         ('home',       '1  Upload Data'),
@@ -85,7 +85,6 @@ def render_progress():
         ('validation', '4  Validation'),
         ('xai',        '5  XAI'),
         ('chatbot',    '6  AI Assistant'),
-        ('rop',        '7  ROP Analysis'),
     ]
     done_pages = {
         'home':       st.session_state['df_raw'] is not None,
@@ -94,7 +93,6 @@ def render_progress():
         'validation': False,
         'xai':        False,
         'chatbot':    False,
-        'rop':        False,
     }
     unlocked = {
         'home':       True,
@@ -103,7 +101,6 @@ def render_progress():
         'validation': st.session_state['forecast_done'],
         'xai':        st.session_state['forecast_done'],
         'chatbot':    st.session_state['forecast_done'],
-        'rop':        True,
     }
     cols = st.columns(len(steps))
     for col, (p, label) in zip(cols, steps):
@@ -120,7 +117,8 @@ def render_progress():
         else:
             col.markdown(f'<div class=\'step {cls} locked\'>{label}</div>', unsafe_allow_html=True)
 
-# ── Router ─────────────────────────────────────────
+# â”€â”€ Router â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# Navbar removed to reduce top clutter â€” main content rendered immediately
 st.markdown('<div class=\'main-content\'>', unsafe_allow_html=True)
 render_progress()
 
@@ -158,8 +156,5 @@ elif page == 'chatbot':
     else:
         from pages.chatbot import render
         render()
-elif page == 'rop':
-    from pages.rop import render
-    render()
 
 st.markdown('</div>', unsafe_allow_html=True)
